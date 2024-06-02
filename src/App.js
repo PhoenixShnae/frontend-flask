@@ -1,23 +1,28 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import axios from 'axios';
 
 function App() {
+  const [keyword, setKeyword] = useState('');
+
+  const handleKeywordChange = (event) => {
+    setKeyword(event.target.value)
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios.post('/data',{key: keyword})
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form onSubmit={handleSubmit}>
+        <h1>Input</h1>
+        <input type='text' onChange={handleKeywordChange} value={keyword}></input>
+        <br></br>
+        <button type="submit">Submit</button>
+      </form>
+
     </div>
   );
 }
